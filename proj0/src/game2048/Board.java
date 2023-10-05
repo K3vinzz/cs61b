@@ -42,6 +42,7 @@ public class Board {
         }
     }
 
+
     /** Returns the size of the board. */
     public int size() {
         return _values.length;

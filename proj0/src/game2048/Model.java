@@ -93,8 +93,13 @@ public class Model {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
-
-
+        for(int r = 0; r < b.size(); r += 1){
+            for(int c = 0; c < b.size(); c += 1){
+                if (b.tile(c, r) == null){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -105,8 +110,15 @@ public class Model {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
-
-
+        for(int r = 0; r < b.size(); r += 1){
+            for(int c = 0; c < b.size(); c += 1){
+                if (b.tile(c, r)==null){
+                    continue;
+                } else if(b.tile(c, r).value() == MAX_PIECE){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -118,8 +130,25 @@ public class Model {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b)){
+            return true;
+        } else {
+            for (int c = 0; c < b.size(); c += 1){
+                for (int r = 0; r < b.size() - 1; r += 1){
+                    if (b.tile(c, r).value() == b.tile(c, r + 1).value()){
+                        return true;
+                    }
+                }
+            }
+            for (int r = 0; r < b.size(); r += 1){
+                for (int c = 0; c < b.size() - 1; c += 1){
+                    if (b.tile(c, r).value() == b.tile(r, c + 1).value()){
+                        return true;
+                    }
+                }
+            }
 
-
+        }
         return false;
     }
 
