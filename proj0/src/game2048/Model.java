@@ -152,6 +152,27 @@ public class Model {
         return false;
     }
 
+    /** Helper funciton for checking one column */
+    public void handle_col(int col){
+        int last_value = 0, current_value = 0, place_ptr = board.size();
+        for (int r = board.size() - 1; r >= 0; r -= 1){
+            Tile t = board.tile(col, r);
+            if (t != null){
+                current_value = t.value();
+                if (current_value == last_value){
+                    board.move(col, place_ptr, t);
+                    score += tile(col, place_ptr).value();
+                    last_value = 0;
+
+                } else {
+                    place_ptr -= 1;
+                    board.move(col, place_ptr , t);
+                    last_value = t.value();
+                }
+            }
+        }
+    }
+
     /** Tilt the board toward SIDE.
      *
      * 1. If two Tile objects are adjacent in the direction of motion and have
@@ -167,9 +188,14 @@ public class Model {
     public void tilt(Side side) {
         // TODO: Modify this.board (and if applicable, this.score) to account
         // for the tilt to the Side SIDE.
-
-
+        board.setViewingPerspective(side);
+        for (int c = 0; c < board.size(); c += 1){
+            handle_col(c);
+        }
+        board.setViewingPerspective(Side.NORTH);
         checkGameOver();
+
+
     }
 
 
