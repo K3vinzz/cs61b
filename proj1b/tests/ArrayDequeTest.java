@@ -1,4 +1,5 @@
 import jh61b.utils.Reflection;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -100,8 +101,33 @@ public class ArrayDequeTest {
          a.addLast(6); // [5, 3, 1, 2, 4, 6]
          a.removeFirst(); // [3, 1, 2, 4, 6]
          assertThat(a.toList()).containsExactly(3, 1, 2, 4, 6).inOrder();
-
      }
+
+     @Test
+     public void removeLastTest(){
+         ArrayDeque<Integer> a = new ArrayDeque<>();
+         a.addFirst(1);
+         a.addLast(2);
+         a.addFirst(3);
+         a.addLast(4);
+         a.addFirst(5);
+         a.addLast(6); // [5, 3, 1, 2, 4, 6]
+         a.removeLast();
+         assertThat(a.toList()).containsExactly(5, 3, 1, 2, 4).inOrder();
+     }
+
+     @Test
+     public void resizeDownTest(){
+         ArrayDeque<Integer> a = new ArrayDeque<>();
+         for (int i = 0; i < 100; i += 1){
+             a.addLast(1);
+         }
+         for (int i = 0; i < 90; i += 1){
+             a.removeFirst();
+         }
+         assertThat(a.size()).isEqualTo(9);
+     }
+
 
 
 }

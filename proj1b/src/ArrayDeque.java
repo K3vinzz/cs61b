@@ -33,6 +33,23 @@ public class ArrayDeque<T> implements Deque<T> {
         return false;
     }
 
+    /** Helper function for checking if ArrayDeque needs to resize down */
+    private boolean isNeedResizeDown(int s){
+        float r = (float) size / items.length;
+        if (r < 0.25){
+            return true;
+        }
+        return false;
+    }
+
+    private int resizeDownCapacity(int s, int currentCapacity){
+        int resizedCapacity = currentCapacity;
+        while (resizedCapacity > s){
+            resizedCapacity = resizedCapacity / 2;
+        }
+        return resizedCapacity * 2;
+    }
+
     /** Helper function for calculating the position of ArrayDeque[0] in new items */
     private int firstItemStartingPosition(int capacity, int distance){
 //        System.out.println(capacity - distance);
@@ -117,12 +134,27 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public T removeFirst() {
-        return null;
+        T returnValue = items[targetIndexInItems(nextFirst + 1)];
+        items[targetIndexInItems(nextFirst + 1)] = null;
+        nextFirst += 1;
+        size -= 1;
+        if (isNeedResizeDown(size)){
+            resize(resizeDownCapacity(size, items.length));
+        }
+
+        return returnValue;
     }
 
     @Override
     public T removeLast() {
-        return null;
+        T returnValue = items[targetIndexInItems(nextLast - 1)];
+        items[targetIndexInItems(nextLast - 1)] = null;
+        nextLast -= 1;
+        size -= 1;
+        if (isNeedResizeDown(size)){
+            resize(resizeDownCapacity(size, items.length));
+        }
+        return returnValue;
     }
 
     @Override
