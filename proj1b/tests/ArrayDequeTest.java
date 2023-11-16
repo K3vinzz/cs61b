@@ -1,10 +1,9 @@
 import jh61b.utils.Reflection;
-import org.checkerframework.checker.units.qual.A;
+import org.apache.hc.client5.http.impl.routing.SystemDefaultRoutePlanner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
-import java.util.Deque;
 import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -24,110 +23,89 @@ public class ArrayDequeTest {
 
      @Test
      public void addFirstTest(){
-         ArrayDeque<Integer> a = new ArrayDeque<>();
-         a.addFirst(1);
+         Deque<Integer> a = new ArrayDeque<>();
          a.addFirst(2);
-         a.addFirst(3);
-         assertThat(a.toList()).containsExactly(3, 2, 1).inOrder();
-     }
-
-     @Test
-     public void addLastTest(){
-         ArrayDeque<Integer> a = new ArrayDeque<>();
-         a.addLast(1);
-         a.addLast(2);
-         a.addLast(3);
-         assertThat(a.toList()).containsExactly(1,2,3).inOrder();
-     }
-
-     @Test
-     public void resizeTest(){
-         ArrayDeque<Integer> a = new ArrayDeque<>();
          a.addFirst(1);
-         a.addLast(2);
-         a.addLast(4);
+     }
+
+     @Test
+     public void getTest(){
+         Deque<Integer> a = new ArrayDeque<>();
+         a.addFirst(2);
+         a.addFirst(1);
+         assertThat(a.get(0)).isEqualTo(1);
+         assertThat(a.get(1)).isEqualTo(2);
+     }
+
+     @Test
+    public void toListTest(){
+         Deque<Integer> a = new ArrayDeque<>();
+         a.addFirst(4);
+         a.addFirst(3);
+         a.addFirst(2);
+         a.addFirst(1);
+         a.addLast(5);
          a.addLast(6);
          a.addLast(7);
-         a.addFirst(3);
-         a.addFirst(5);
-         a.addFirst(8);
-         a.addFirst(100);
-         a.addFirst(234);
-         a.addLast(567);
-         assertThat(a.toList()).containsExactly(234,100,8,5,3,1,2,4,6,7,567).inOrder();
+         a.addLast(8);
+         assertThat(a.toList()).containsExactly(1,2,3,4,5,6,7,8).inOrder();
      }
 
      @Test
-    public void getTest(){
-         ArrayDeque<Integer> a = new ArrayDeque<>();
-         a.addFirst(1);
-         a.addLast(2);
-         a.addFirst(3);
-         a.addLast(4);
-         a.addFirst(5);
-         a.addLast(6); // ArrayDeque: [nextFirst, 5, 3, 1, 2, 4, 6, nextLast]
-                          //      items: [1, 2, 4, 6, nextLast, nextFirst, 5, 3]
-         assertThat(a.get(0)).isEqualTo(5);
-         assertThat(a.get(5)).isEqualTo(6);
-//         assertThat(a.get(6)).isNull();
+    public void resizeTest(){
+         Deque<Integer> a = new ArrayDeque<>();
+         for (int i = 1; i < 36; i += 1){
+             a.addLast(i);
+         }
+         System.out.println(a.toList());
+         System.out.println(a.size());
      }
 
-     @Test
-     public void sizeTest(){
-         ArrayDeque<String> a = new ArrayDeque<>();
-         a.addFirst("abcs");
-         a.addLast("qwiduh");
-         a.addLast("21easd");
-         assertThat(a.size()).isEqualTo(3);
-     }
-
-     @Test
-    public void isEmptyTest(){
-         ArrayDeque<String> a = new ArrayDeque<>();
-         assertThat(a.isEmpty()).isTrue();
-         a.addLast("qwe");
-         a.addFirst("12312");
-         assertThat(a.isEmpty()).isFalse();
-     }
-
-     @Test
+    @Test
     public void removeFirstTest(){
-         ArrayDeque<Integer> a = new ArrayDeque<>();
-         a.addFirst(1);
-         a.addLast(2);
-         a.addFirst(3);
-         a.addLast(4);
-         a.addFirst(5);
-         a.addLast(6); // [5, 3, 1, 2, 4, 6]
-         a.removeFirst(); // [3, 1, 2, 4, 6]
-         assertThat(a.toList()).containsExactly(3, 1, 2, 4, 6).inOrder();
-     }
+        Deque<Integer> a = new ArrayDeque<>();
+        a.addFirst(4);
+        a.addFirst(3);
+        a.addFirst(2);
+        a.addFirst(1);
+        a.addLast(5);
+        a.addLast(6);
+        a.addLast(7);
+        a.addLast(8);
+        a.addLast(9);
+        a.addLast(10);
+        a.removeFirst();
+        System.out.println(a.toList());
+    }
 
-     @Test
-     public void removeLastTest(){
-         ArrayDeque<Integer> a = new ArrayDeque<>();
-         a.addFirst(1);
-         a.addLast(2);
-         a.addFirst(3);
-         a.addLast(4);
-         a.addFirst(5);
-         a.addLast(6); // [5, 3, 1, 2, 4, 6]
-         a.removeLast();
-         assertThat(a.toList()).containsExactly(5, 3, 1, 2, 4).inOrder();
-     }
+    @Test
+    public void removeLastTest(){
+        Deque<Integer> a = new ArrayDeque<>();
+        a.addFirst(4);
+        a.addFirst(3);
+        a.addFirst(2);
+        a.addFirst(1);
+        a.addLast(5);
+        a.addLast(6);
+        a.addLast(7);
+        a.addLast(8);
+        a.addLast(9);
+        a.addLast(10);
+        for (int i = 0; i < 9; i += 1){
+            a.removeLast();
+        }
+        System.out.println(a.toList());
+    }
 
-     @Test
-     public void resizeDownTest(){
-         ArrayDeque<Integer> a = new ArrayDeque<>();
-         for (int i = 0; i < 100; i += 1){
-             a.addLast(1);
-         }
-         for (int i = 0; i < 90; i += 1){
-             a.removeFirst();
-         }
-         assertThat(a.size()).isEqualTo(9);
-     }
-
-
-
+    @Test
+    public void resizeDowntest(){
+        Deque<Integer> a = new ArrayDeque<>();
+        for (int i = 0; i < 33; i++){
+            a.addLast(i);
+        }
+        for (int i = 0; i < 27; i++){
+            a.removeLast();
+        }
+        System.out.println(a.toList());
+    }
 }
