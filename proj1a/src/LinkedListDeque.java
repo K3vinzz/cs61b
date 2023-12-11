@@ -93,7 +93,7 @@ public class LinkedListDeque<T> implements Deque<T>{
     @Override
     public T get(int index) {
         Node current = sentinel;
-        if (0 < index && index < size -1){
+        if (-1 < index && index < size){
             for (int i = 0; i <= index; i += 1){
                 current = current.next;
             }

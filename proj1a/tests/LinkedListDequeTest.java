@@ -132,7 +132,7 @@ public class LinkedListDequeTest {
          lld1.addFirst(-1); // [-1, 0, 1]
          lld1.addLast(2);   // [-1, 0, 1, 2]
          lld1.addFirst(-2); // [-2, -1, 0, 1, 2]
-         assertThat(lld1.get(3)).isEqualTo(1);
+         assertThat(lld1.get(0)).isEqualTo(-2);
     }
 
     @Test
