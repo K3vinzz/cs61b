@@ -34,6 +34,23 @@ public class ArrayDeque<T> implements Deque<T> {
     public Iterator<T> iterator() {return new ArrayDequeIterator(); }
 
     @Override
+    public boolean equals(Object o){
+        if (o == this) { return true; }
+        if (o instanceof ArrayDeque oas){
+            if (oas.size != this.size){
+                return false;
+            }
+            for (int i = 0; i < size; i += 1){
+                if (oas.get(i) != this.get(i)){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void addFirst(T x) {
         if (isNeedResizeUp(size)){
             resize();
@@ -52,7 +69,7 @@ public class ArrayDeque<T> implements Deque<T> {
     public void addLast(T x) {
         if (isNeedResizeUp(size)){
             resize();
-            System.out.println("resize up to : "+items.length);
+//            System.out.println("resize up to : "+items.length);
         }
         items[nextLast] = x;
         nextLast += 1;
@@ -92,7 +109,7 @@ public class ArrayDeque<T> implements Deque<T> {
         size -= 1;
         if ((float)size / items.length < 0.25){
             resizeDown();
-            System.out.println("resize down to : "+items.length);
+//            System.out.println("resize down to : "+items.length);
 
         }
         return returnItem;

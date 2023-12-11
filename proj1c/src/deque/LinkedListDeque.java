@@ -50,6 +50,29 @@ public class LinkedListDeque<T> implements Deque<T> {
     public Iterator<T> iterator() { return new LinkedListDequeIterator(); }
 
     @Override
+    public boolean equals(Object o){
+        if (o == this) {return true; }
+        if (o instanceof LinkedListDeque oas){
+            if (oas.size != this.size){
+                return false;
+            }
+            Node current1 = this.sentinel;
+            Node current2 = oas.sentinel;
+            for (int i = 0; i <= size; i += 1){
+//                System.out.println("c1 :"+current1.item);
+//                System.out.println("c2 :"+current2.item);
+                if (current1.item != current2.item){
+                    return false;
+                }
+                current1 = current1.next;
+                current2 = current2.next;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void addFirst(T x) {
         size += 1;
         Node first = new Node(x, sentinel.next, sentinel);
@@ -136,16 +159,5 @@ public class LinkedListDeque<T> implements Deque<T> {
             return node.item;
         }
         return getRecursive(node.next, index - 1);
-    }
-
-    public static void main(String args[]){
-        Deque<String> lld1 = new LinkedListDeque<>();
-
-        lld1.addLast("front");
-        lld1.addLast("middle");
-        lld1.addLast("back");
-        for (String s : lld1) {
-            System.out.println(s);
-        }
     }
 }

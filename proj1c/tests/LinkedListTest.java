@@ -18,4 +18,19 @@ public class LinkedListTest {
         }
     }
 
+    @Test
+    public void equalsTest(){
+        Deque<String> lld1 = new LinkedListDeque<>();
+        lld1.addLast("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+
+        Deque<String> lld2 = new LinkedListDeque<>();
+        lld2.addLast("front");
+        lld2.addLast("middle");
+        lld2.addLast("back");
+
+        assertThat(lld1.equals(lld2)).isTrue();
+    }
+
 }
