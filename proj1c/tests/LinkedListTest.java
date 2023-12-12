@@ -3,6 +3,9 @@ import deque.Deque;
 import deque.ArrayDeque;
 import deque.LinkedListDeque;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.google.common.truth.Truth.assertThat;
 public class LinkedListTest {
     @Test
@@ -31,6 +34,15 @@ public class LinkedListTest {
         lld2.addLast("back");
 
         assertThat(lld1.equals(lld2)).isTrue();
+    }
+
+    @Test
+    public void toStringTest(){
+        Deque<String> lld1 = new LinkedListDeque<>();
+        lld1.addLast("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+        System.out.println(lld1);
     }
 
 }

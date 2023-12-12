@@ -26,7 +26,7 @@ public class ArrayDeque<T> implements Deque<T> {
         }
 
         public T next(){
-            T returnItem = items[pos];
+            T returnItem = get(pos);
             pos += 1;
             return returnItem;
         }
@@ -48,6 +48,18 @@ public class ArrayDeque<T> implements Deque<T> {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString(){
+        if (size == 0) { return "[]"; }
+        StringBuilder sb = new StringBuilder("[");
+        for(T item : this){
+            sb.append(item.toString());
+            sb.append(", ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     @Override
@@ -186,4 +198,5 @@ public class ArrayDeque<T> implements Deque<T> {
         }
         return index;
     }
+
 }

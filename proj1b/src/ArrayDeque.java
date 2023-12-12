@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ArrayDeque<T> implements Deque<T>{
@@ -12,6 +13,7 @@ public class ArrayDeque<T> implements Deque<T>{
         size = 0;
         items = (T[])new Object[8];
     }
+
 
     @Override
     public void addFirst(T x) {

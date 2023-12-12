@@ -73,6 +73,19 @@ public class LinkedListDeque<T> implements Deque<T> {
     }
 
     @Override
+    public String toString(){
+        if (size == 0) { return "[]"; }
+        StringBuilder sb = new StringBuilder("[");
+        Node n = sentinel;
+        for (T item : this){
+            sb.append(item.toString());
+            sb.append(", ");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    @Override
     public void addFirst(T x) {
         size += 1;
         Node first = new Node(x, sentinel.next, sentinel);
