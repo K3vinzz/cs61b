@@ -83,6 +83,15 @@ public class UnionFindTest {
     /**
      * Write your own tests below here to verify for correctness. The given tests are not comprehensive.
      */
+    @Test
+    public void myTest(){
+        UnionFind uf = new UnionFind(5);
+        uf.union(0, 1);
+        System.out.println(uf.parent(0));
+        uf.union(0,4);
+        System.out.println(uf.parent(4));
+
+    }
 
 }
 
