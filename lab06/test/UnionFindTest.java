@@ -86,10 +86,14 @@ public class UnionFindTest {
     @Test
     public void myTest(){
         UnionFind uf = new UnionFind(5);
-        uf.union(0, 1);
-        System.out.println(uf.parent(0));
-        uf.union(0,4);
-        System.out.println(uf.parent(4));
+        uf.union(0,1);
+        uf.union(0,2);
+        uf.union(0,3);
+        System.out.println(uf.find(3));
+        System.out.println(uf.find(2));
+        System.out.println(uf.find(1));
+        System.out.println(uf.find(0));
+        System.out.println(uf.connected(0, 4));
 
     }
 

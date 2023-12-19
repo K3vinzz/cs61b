@@ -1,4 +1,5 @@
-import java.util.Arrays;
+import java.util.*;
+
 
 public class UnionFind {
     /**
@@ -31,9 +32,7 @@ public class UnionFind {
 
     /* Returns true if nodes/vertices V1 and V2 are connected. */
     public boolean connected(int v1, int v2) {
-        // TODO: YOUR CODE HERE
-
-        return false;
+        return find(v1) == find(v2);
     }
 
     /* Returns the root of the set V belongs to. Path-compression is employed
@@ -44,8 +43,13 @@ public class UnionFind {
             throw new IllegalArgumentException();
         }
         int root = v;
+        List<Integer> p = new ArrayList<>();
         while (data[root] >= 0){
+            p.add(root);
             root = data[root];
+        }
+        for( int n : p){
+            data[n] = root;
         }
         return root;
     }
@@ -56,9 +60,11 @@ public class UnionFind {
        root to V2's root. Union-ing a item with itself or items that are
        already connected should not change the structure. */
     public void union(int v1, int v2) {
-        // TODO: YOUR CODE HERE
         int root1 = find(v1);
         int root2 = find(v2);
+        if (root1 == root2) {
+            return;
+        }
         if (sizeOf(root1) > sizeOf(root2)){
             data[root1] += data[root2];
             data[root2] = root1;
