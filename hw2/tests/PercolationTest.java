@@ -42,7 +42,8 @@ public class PercolationTest {
 
     @Test
     public void yourTestHere() {
-        // TODO: write some more tests
+        Percolation p = new Percolation(5);
+        p.open(0,1);
+        System.out.println(p.isFull(0,1));
     }
-
 }

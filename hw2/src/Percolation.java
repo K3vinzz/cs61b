@@ -2,51 +2,95 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 
 public class Percolation {
-    // TODO: Add any necessary instance variables.
-
-    public class Site {
-        int row, col, xy;
-        boolean isOpen;
-        public Site(int x, int y){
-            row = x;
-            col = y;
-            xy = xyTo1d(x, y);
+    public class Site{
+        public int row, col, xy;
+        public boolean isOpen;
+        public Site(int r, int c){
+            row = r;
+            col = c;
+            xy = r * size + c;
+            isOpen = false;
         }
     }
+    private int size;
+    private Site sites[][];
+    private Site virtualTop, virtualBot;
+    private WeightedQuickUnionUF uf, uf2;
+    private int openCount;
+
     public Percolation(int N) {
-        // TODO: Fill in this constructor.
+        size = N;
+        sites = new Site[N][N];
+        openCount = 0;
+        uf = new WeightedQuickUnionUF(N * N + 2);
+        uf2 = new WeightedQuickUnionUF(N * N + 1);
+        virtualTop = new Site(size, 0); // size = 5 , xy = 25
+        virtualBot = new Site(size, 1); // xy = 26
+        for (int r = 0; r < N; r += 1){
+            for (int c = 0; c < N; c += 1){
+                sites[r][c] = new Site(r, c);
+            }
+        }
     }
 
     public void open(int row, int col) {
-        // TODO: Fill in this method.
+        sites[row][col].isOpen = true;
+        openCount += 1;
+        // vertical check
+        if (row == 0){
+            uf.union(sites[row][col].xy, virtualTop.xy);
+            uf2.union(sites[row][col].xy, virtualTop.xy);
+            if (sites[row + 1][col].isOpen){
+                uf.union(sites[row][col].xy, sites[row + 1][col].xy);
+                uf2.union(sites[row][col].xy, sites[row + 1][col].xy);
+            }
+        } else if (row == size - 1) {
+            uf .union(sites[row][col].xy, virtualBot.xy);
+            if (sites[row - 1][col].isOpen){
+                uf.union(sites[row][col].xy, sites[row - 1][col].xy);
+                uf2.union(sites[row][col].xy, sites[row - 1][col].xy);
+
+            }
+        } else {
+            if (sites[row - 1][col].isOpen){
+                uf.union(sites[row][col].xy, sites[row - 1][col].xy);
+                uf2.union(sites[row][col].xy, sites[row - 1][col].xy);
+
+            }
+            if (sites[row + 1][col].isOpen){
+                uf.union(sites[row][col].xy, sites[row + 1][col].xy);
+                uf2.union(sites[row][col].xy, sites[row + 1][col].xy);
+
+            }
+        }
+
+        // horizontal check
+        if (col > 0 && sites[row][col - 1].isOpen){
+            uf.union(sites[row][col].xy, sites[row][col - 1].xy);
+            uf2.union(sites[row][col].xy, sites[row][col - 1].xy);
+
+        }
+        if (col < size - 1 && sites[row][col + 1].isOpen){
+            uf.union(sites[row][col].xy, sites[row][col + 1].xy);
+            uf2.union(sites[row][col].xy, sites[row][col + 1].xy);
+        }
     }
 
     public boolean isOpen(int row, int col) {
-        // TODO: Fill in this method.
-        return false;
+        return sites[row][col].isOpen;
     }
 
     public boolean isFull(int row, int col) {
-        // TODO: Fill in this method.
-        return false;
+        return uf2.connected(sites[row][col].xy, virtualTop.xy) ;
     }
 
     public int numberOfOpenSites() {
-        // TODO: Fill in this method.
-        return 0;
+        return openCount;
     }
 
     public boolean percolates() {
-        // TODO: Fill in this method.
-        return false;
+        return uf.connected(virtualTop.xy, virtualBot.xy);
     }
 
-    // TODO: Add any useful helper methods (we highly recommend this!).
-    // TODO: Remove all TODO comments before submitting.
-
-    /* Helper function to convert x, y to 1-d */
-    public int xyTo1d(int x, int y){
-        return x * 5 + y;
-    }
 
 }
