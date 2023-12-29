@@ -114,4 +114,18 @@ public class TestBSTMap {
         assertThat(b.get("b")).isEqualTo("provolone");
     }
 
+    @Test
+    public void myTest(){
+        BSTMap<Integer, String> b = new BSTMap<>();
+        b.put(9, "123");
+        b.put(4, "123");
+        b.put(6, "123");
+        b.put(15, "123");
+        b.put(20, "123");
+
+        for(int k : b){
+            System.out.println(k);
+        }
+    }
+
 }
