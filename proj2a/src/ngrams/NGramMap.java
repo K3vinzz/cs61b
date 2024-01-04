@@ -3,6 +3,7 @@ package ngrams;
 import edu.princeton.cs.algs4.In;
 
 import java.util.Collection;
+import java.util.TreeMap;
 
 import static ngrams.TimeSeries.MAX_YEAR;
 import static ngrams.TimeSeries.MIN_YEAR;
@@ -20,14 +21,31 @@ import static ngrams.TimeSeries.MIN_YEAR;
 public class NGramMap {
 
     // TODO: Add any necessary static/instance variables.
+    private TreeMap<String, TimeSeries> map;
+    private TimeSeries totalCount;
 
     /**
      * Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME.
      */
     public NGramMap(String wordsFilename, String countsFilename) {
-        // TODO: Fill in this constructor. See the "NGramMap Tips" section of the spec for help.
         In words = new In(wordsFilename);
         In counts = new In(countsFilename);
+        map = new TreeMap<>();
+        totalCount = new TimeSeries();
+        while (counts.hasNextLine()) {
+            String[] split = counts.readLine().split(",");
+            Integer year = Integer.parseInt(split[0]);
+            Double count = Double.parseDouble(split[1]);
+            totalCount.put(year, count);
+        }
+        while (words.hasNextLine()){
+            String[] split = words.readLine().split("\t");
+            Integer year = Integer.parseInt(split[1]);
+            Double count = Double.parseDouble(split[2]);
+            if (!map.containsKey(split[0])) {
+   
+            }
+        }
 
     }
 
@@ -58,8 +76,7 @@ public class NGramMap {
      * Returns a defensive copy of the total number of words recorded per year in all volumes.
      */
     public TimeSeries totalCountHistory() {
-        // TODO: Fill in this method.
-        return null;
+        return totalCount;
     }
 
     /**

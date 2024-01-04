@@ -2,19 +2,31 @@ package main;
 
 import edu.princeton.cs.algs4.In;
 
+import java.lang.reflect.Type;
+
 public class FileReadDemo {
     public static void main(String[] args) {
-        In in = new In("./data/ngrams/very_short.csv");
-        int i = 0;
+//        In in = new In("./data/ngrams/very_short.csv");
+////        int i = 0;
+////
+////        while (!in.isEmpty()) {
+////            i += 1;
+////            String nextLine = in.readLine();
+////            System.out.print("Line " + i + " is: ");
+////            System.out.println(nextLine);
+////            System.out.print("After splitting on tab characters, the first word is: ");
+////            String[] splitLine = nextLine.split("\t");
+////            System.out.println(splitLine[0]);
+////        }
+        test();
+    }
 
-        while (!in.isEmpty()) {
-            i += 1;
-            String nextLine = in.readLine();
-            System.out.print("Line " + i + " is: ");
-            System.out.println(nextLine);
-            System.out.print("After splitting on tab characters, the first word is: ");
-            String[] splitLine = nextLine.split("\t");
-            System.out.println(splitLine[0]);
+    public static void test(){
+        In in = new In("./data/ngrams/test_total.csv");
+        while (in.hasNextLine()){
+            String year = in.readLine().split(",")[0];
+            Integer y = Integer.parseInt(year);
+            System.out.println(y.getClass());
         }
     }
 }
