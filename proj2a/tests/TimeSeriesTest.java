@@ -41,4 +41,24 @@ public class TimeSeriesTest {
             assertThat(totalPopulation.data().get(i)).isWithin(1E-10).of(expectedTotal.get(i));
         }
     }
+
+    @Test
+    public void test(){
+        TimeSeries t = new TimeSeries();
+        t.put(1996, 1.0);
+        t.put(1997, 2.0);
+        t.put(1999, 3.0);
+        t.put(2030, 4.0);
+
+        TimeSeries t2 = new TimeSeries();
+        t2.putAll(t);
+
+        t2.put(3000, 12.2);
+
+        System.out.println(t);
+        System.out.println(t2);
+        System.out.println(t.dividedBy(t2));
+
+
+    }
 } 

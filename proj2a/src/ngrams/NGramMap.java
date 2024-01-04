@@ -1,5 +1,7 @@
 package ngrams;
 
+import edu.princeton.cs.algs4.In;
+
 import java.util.Collection;
 
 import static ngrams.TimeSeries.MAX_YEAR;
@@ -24,6 +26,9 @@ public class NGramMap {
      */
     public NGramMap(String wordsFilename, String countsFilename) {
         // TODO: Fill in this constructor. See the "NGramMap Tips" section of the spec for help.
+        In words = new In(wordsFilename);
+        In counts = new In(countsFilename);
+
     }
 
     /**
@@ -98,5 +103,4 @@ public class NGramMap {
     }
 
     // TODO: Add any private helper methods.
-    // TODO: Remove all TODO comments before submitting.
 }

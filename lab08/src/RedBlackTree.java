@@ -62,23 +62,33 @@ public class RedBlackTree<T extends Comparable<T>> {
     /* Flips the color of node and its children. Assume that NODE has both left
        and right children. */
     void flipColors(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
+        node.isBlack = !node.isBlack;
+        node.left.isBlack = !node.left.isBlack;
+        node.right.isBlack = !node.right.isBlack;
     }
 
     /* Rotates the given node to the right. Returns the new root node of
        this subtree. For this implementation, make sure to swap the colors
        of the new root and the old root!*/
     RBTreeNode<T> rotateRight(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
-        return null;
+        RBTreeNode<T> x = node.left;
+        node.left = x.right;
+        x.right = node;
+        x.isBlack = node.isBlack;
+        node.isBlack = false;
+        return x;
     }
 
     /* Rotates the given node to the left. Returns the new root node of
        this subtree. For this implementation, make sure to swap the colors
        of the new root and the old root! */
     RBTreeNode<T> rotateLeft(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
-        return null;
+        RBTreeNode<T> x = node.right;
+        node.right = x.left;
+        x.left = node;
+        x.isBlack = node.isBlack;
+        node.isBlack = false;
+        return x;
     }
 
     public void insert(T item) {
@@ -105,15 +115,15 @@ public class RedBlackTree<T extends Comparable<T>> {
             node.right = insert(node.right, item);
         }
 
-        // TODO: YOUR CODE HERE
 
         // Rotate left operation
-
+        if (isRed(node.right) && !isRed(node.left)) { node = rotateLeft(node); }
         // Rotate right operation
-
+        if (isRed(node.left) && isRed(node.left.left)) { node = rotateRight(node); }
         // Color flip
+        if (isRed(node.left) && isRed(node.right)) { flipColors(node); }
 
-        return null; //fix this return statement
+        return node; //fix this return statement
     }
 
     /* Returns whether the given node is red. Null nodes (children of leaf
