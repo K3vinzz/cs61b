@@ -2,6 +2,7 @@ package ngrams;
 
 import edu.princeton.cs.algs4.In;
 
+import java.sql.Time;
 import java.util.Collection;
 import java.util.TreeMap;
 
@@ -19,8 +20,6 @@ import static ngrams.TimeSeries.MIN_YEAR;
  * @author Josh Hug
  */
 public class NGramMap {
-
-    // TODO: Add any necessary static/instance variables.
     private TreeMap<String, TimeSeries> map;
     private TimeSeries totalCount;
 
@@ -38,15 +37,20 @@ public class NGramMap {
             Double count = Double.parseDouble(split[1]);
             totalCount.put(year, count);
         }
+
+        TimeSeries t = null;
         while (words.hasNextLine()){
             String[] split = words.readLine().split("\t");
+            String nextWord = split[0];
             Integer year = Integer.parseInt(split[1]);
             Double count = Double.parseDouble(split[2]);
-            if (!map.containsKey(split[0])) {
-   
-            }
-        }
 
+            if (!map.containsKey(nextWord)) {
+                map.put(nextWord, new TimeSeries());
+                t = map.get(nextWord);
+            }
+            t.put(year, count);
+        }
     }
 
     /**
@@ -57,8 +61,7 @@ public class NGramMap {
      * returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        return new TimeSeries(map.get(word), startYear, endYear);
     }
 
     /**
@@ -68,8 +71,7 @@ public class NGramMap {
      * is not in the data files, returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        return new TimeSeries(map.get(word), MIN_YEAR, MAX_YEAR);
     }
 
     /**
@@ -85,8 +87,7 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        return countHistory(word, startYear, endYear).dividedBy(totalCount);
     }
 
     /**
@@ -95,8 +96,7 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        return countHistory(word).dividedBy(totalCount);
     }
 
     /**
@@ -104,10 +104,14 @@ public class NGramMap {
      * ENDYEAR, inclusive of both ends. If a word does not exist in this time frame, ignore it
      * rather than throwing an exception.
      */
-    public TimeSeries summedWeightHistory(Collection<String> words,
-                                          int startYear, int endYear) {
+    public TimeSeries summedWeightHistory(Collection<String> words, int startYear, int endYear) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries res = new TimeSeries();
+        for(String word : words) {
+            TimeSeries cur = new TimeSeries(map.get(word), startYear, endYear);
+            res = res.plus(cur);
+        }
+        return res.dividedBy(totalCount);
     }
 
     /**
@@ -116,8 +120,10 @@ public class NGramMap {
      */
     public TimeSeries summedWeightHistory(Collection<String> words) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries res = new TimeSeries();
+        for (String word : words) {
+            res = res.plus(map.get(word));
+        }
+        return res.dividedBy(totalCount);
     }
-
-    // TODO: Add any private helper methods.
 }

@@ -74,8 +74,10 @@ public class NGramMapTest {
 
     @Test
     public void totalCountHistoryTest(){
-        NGramMap ngm = new NGramMap("./data/ngrams/very_short.csv", "./data/ngrams/test_total.csv");
-        System.out.println(ngm.totalCountHistory().data());
+        NGramMap ngm = new NGramMap("./data/ngrams/top_14377_words.csv",
+                "./data/ngrams/total_counts.csv");
+//        List<String> words = new ArrayList<>(Arrays.asList("cat", "dog"));
+        System.out.println(ngm.weightHistory("cat", 2000, 2001));
     }
 
 }  

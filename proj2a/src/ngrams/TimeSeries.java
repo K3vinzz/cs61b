@@ -31,7 +31,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
-        this.putAll(ts.subMap(startYear, endYear));
+        this.putAll(ts.subMap(startYear, endYear + 1)); // fromKey is inclusive ; toKey is exclusive
     }
 
     /**

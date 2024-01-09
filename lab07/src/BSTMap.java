@@ -150,9 +150,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
         public void inorderTraversal(BSTNode node) {
             if (node != null){
-                inorderTraversal(node.right);
-                stack.push(node.key);
                 inorderTraversal(node.left);
+                stack.push(node.key);
+                inorderTraversal(node.right);
             }
         }
     }
